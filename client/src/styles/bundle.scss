@@ -1,0 +1,19 @@
+/* SilverWare Social Bundle
+===================================================================================================================== */
+
+// Import Theme Files:
+
+@import "~theme/styles/variables";
+@import "~theme/styles/mixins";
+
+// Import Local Variables:
+
+@import "variables";
+
+// Import Button Styles:
+
+@import "buttons/EmailSharingButton";
+
+// Import Component Styles:
+
+@import "components/SharingComponent";

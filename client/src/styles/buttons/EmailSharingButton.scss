@@ -1,0 +1,52 @@
+/* Email Sharing Button Styles
+===================================================================================================================== */
+
+.emailsharingbutton {
+  
+  height: 20px;
+  font-size: 0;
+  overflow: hidden;
+  
+  > a {
+    
+    color: $email-button-color-text;
+    height: 20px;
+    cursor: pointer;
+    padding: 0 4px;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 18px;
+    vertical-align: top;
+    display: inline-block;
+    border: 1px solid $email-button-color-border;
+    border-radius: $email-button-border-radius;
+    text-decoration: none;
+    background-color: $email-button-background;
+    background-image: linear-gradient(
+      $email-button-background-light,
+      $email-button-background-dark
+    );
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    
+    &:focus,
+    &:hover {
+      color: darken($email-button-color-text, 5%);
+      box-shadow: none;
+      border-color: darken($email-button-color-border, 5%);
+      text-decoration: none;
+      background-color: darken($email-button-background, 5%);
+      background-image: linear-gradient(
+        darken($email-button-background-light, 5%),
+        darken($email-button-background-dark, 5%)
+      );
+    }
+    
+    &:active {
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1) inset;
+      border-color: darken($email-button-color-border, 10%);
+      background-color: $email-button-background;
+    }
+    
+  }
+  
+}
