@@ -33,7 +33,7 @@ using the included `PageExtension` class, allowing sharing to be disabled for ce
 
 ## Usage
 
-This module provides a `SharingComponent` for which can be added to a [SilverWare][silverware] template
+This module provides a `SharingComponent` which can be added to a [SilverWare][silverware] template
 or layout using the CMS. A `SharingComponent` renders a series of social media sharing buttons for
 the current page, allowing the user to easily share the page with others.
 
