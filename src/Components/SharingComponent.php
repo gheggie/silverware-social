@@ -260,7 +260,7 @@ class SharingComponent extends BaseComponent
             
             if ($page = $this->getCurrentPage(Page::class)) {
                 
-                if (!in_array($page->class, $this->config()->disabled_on)) {
+                if (!in_array(get_class($page), $this->config()->disabled_on)) {
                     
                     if (!$page->isSharingDisabled()) {
                         return parent::isDisabled();
