@@ -17,7 +17,9 @@
 
 namespace SilverWare\Social\Buttons;
 
+use SilverStripe\Core\Convert;
 use SilverStripe\Forms\TextField;
+use SilverWare\Forms\FieldSection;
 use SilverWare\Social\Model\SharingButton;
 
 /**
@@ -46,6 +48,14 @@ class EmailSharingButton extends SharingButton
      * @config
      */
     private static $plural_name = 'Email Sharing Buttons';
+    
+    /**
+     * Description of this object.
+     *
+     * @var string
+     * @config
+     */
+    private static $description = 'A sharing button to share the current page via email';
     
     /**
      * Defines an ancestor class to hide from the admin interface.
@@ -82,23 +92,29 @@ class EmailSharingButton extends SharingButton
         $fields->addFieldsToTab(
             'Root.Main',
             [
-                TextField::create(
-                    'EmailSubject',
-                    $this->fieldLabel('EmailSubject')
-                )->setRightTitle(
-                    _t(
-                        __CLASS__ . '.EMAILSUBJECTRIGHTTITLE',
-                        'Uses the title of the current page if blank.'
-                    )
-                ),
-                TextField::create(
-                    'EmailMessage',
-                    $this->fieldLabel('EmailMessage')
-                )->setRightTitle(
-                    _t(
-                        __CLASS__ . '.EMAILMESSAGERIGHTTITLE',
-                        'Included in the body of the email before the shared link.'
-                    )
+                FieldSection::create(
+                    'EmailSection',
+                    $this->fieldLabel('Email'),
+                    [
+                        TextField::create(
+                            'EmailSubject',
+                            $this->fieldLabel('EmailSubject')
+                        )->setRightTitle(
+                            _t(
+                                __CLASS__ . '.EMAILSUBJECTRIGHTTITLE',
+                                'Uses the title of the current page if blank.'
+                            )
+                        ),
+                        TextField::create(
+                            'EmailMessage',
+                            $this->fieldLabel('EmailMessage')
+                        )->setRightTitle(
+                            _t(
+                                __CLASS__ . '.EMAILMESSAGERIGHTTITLE',
+                                'Included in the body of the email before the shared link.'
+                            )
+                        )
+                    ]
                 )
             ]
         );
@@ -123,28 +139,13 @@ class EmailSharingButton extends SharingButton
         
         // Define Field Labels:
         
-        $labels['EmailSubject'] = _t(__CLASS__ . '.EMAILSUBJECT', 'Email subject');
-        $labels['EmailMessage'] = _t(__CLASS__ . '.EMAILMESSAGE', 'Email message');
+        $labels['Email'] = _t(__CLASS__ . '.EMAIL', 'Email');
+        $labels['EmailSubject'] = _t(__CLASS__ . '.SUBJECT', 'Subject');
+        $labels['EmailMessage'] = _t(__CLASS__ . '.MESSAGE', 'Message');
         
         // Answer Field Labels:
         
         return $labels;
-    }
-    
-    /**
-     * Populates the default values for the fields of the receiver.
-     *
-     * @return void
-     */
-    public function populateDefaults()
-    {
-        // Populate Defaults (from parent):
-        
-        parent::populateDefaults();
-        
-        // Populate Defaults:
-        
-        $this->Name = _t(__CLASS__ . '.SHAREVIAEMAIL', 'Share via Email');
     }
     
     /**
@@ -176,8 +177,12 @@ class EmailSharingButton extends SharingButton
      *
      * @return string
      */
-    public function getLink()
+    public function getButtonLink()
     {
-        return sprintf('mailto:?subject=%s&body=%s', $this->getSubject(), $this->getMessage());
+        return sprintf(
+            'mailto:?subject=%s&body=%s',
+            Convert::raw2mailto($this->getSubject()),
+            Convert::raw2mailto($this->getMessage())
+        );
     }
 }

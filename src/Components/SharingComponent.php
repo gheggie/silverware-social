@@ -18,13 +18,9 @@
 namespace SilverWare\Social\Components;
 
 use SilverStripe\CMS\Model\ErrorPage;
-use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\DropdownField;
-use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Forms\GridField\GridFieldConfig_RecordEditor;
-use SilverStripe\Forms\Tab;
 use SilverWare\Components\BaseComponent;
-use SilverWare\Forms\GridField\GridFieldConfig_OrderableEditor;
+use SilverWare\Forms\FieldSection;
 use SilverWare\Social\Model\SharingButton;
 use Page;
 
@@ -96,16 +92,6 @@ class SharingComponent extends BaseComponent
     ];
     
     /**
-     * Defines the has-many associations for this object.
-     *
-     * @var array
-     * @config
-     */
-    private static $has_many = [
-        'Buttons' => SharingButton::class
-    ];
-    
-    /**
      * Defines the default values for the fields of this object.
      *
      * @var array
@@ -121,7 +107,9 @@ class SharingComponent extends BaseComponent
      * @var array|string
      * @config
      */
-    private static $allowed_children = 'none';
+    private static $allowed_children = [
+        SharingButton::class
+    ];
     
     /**
      * Defines the page classes to disable the object by default.
@@ -136,8 +124,6 @@ class SharingComponent extends BaseComponent
     /**
      * Answers a list of field objects for the CMS interface.
      *
-     * @todo Use GridFieldConfig_OrderableEditor once silverstripe-australia/gridfieldextensions is fixed. :(
-     *
      * @return FieldList
      */
     public function getCMSFields()
@@ -146,39 +132,21 @@ class SharingComponent extends BaseComponent
         
         $fields = parent::getCMSFields();
         
-        // Insert Buttons Tab:
-        
-        $fields->insertAfter(
-            Tab::create(
-                'Buttons',
-                $this->fieldLabel('Buttons')
-            ),
-            'Main'
-        );
-        
-        // Add Buttons Grid Field to Tab:
-        
-        $fields->addFieldToTab(
-            'Root.Buttons',
-            GridField::create(
-                'Buttons',
-                $this->fieldLabel('Buttons'),
-                $this->Buttons(),
-                $config = GridFieldConfig_RecordEditor::create()
-            )
-        );
-        
         // Create Style Fields:
         
         $fields->addFieldToTab(
             'Root.Style',
-            CompositeField::create([
-                DropdownField::create(
-                    'ButtonLayout',
-                    $this->fieldLabel('ButtonLayout'),
-                    $this->getButtonLayoutOptions()
-                ),
-            ])->setName('SharingComponentStyle')->setTitle($this->i18n_singular_name())
+            FieldSection::create(
+                'SharingComponentStyle',
+                $this->i18n_singular_name(),
+                [
+                    DropdownField::create(
+                        'ButtonLayout',
+                        $this->fieldLabel('ButtonLayout'),
+                        $this->getButtonLayoutOptions()
+                    )
+                ]
+            )
         );
         
         // Answer Field Objects:
@@ -201,7 +169,6 @@ class SharingComponent extends BaseComponent
         
         // Define Field Labels:
         
-        $labels['Buttons'] = _t(__CLASS__ . '.BUTTONS', 'Buttons');
         $labels['ButtonLayout'] = _t(__CLASS__ . '.BUTTONLAYOUT', 'Button layout');
         
         // Answer Field Labels:
@@ -238,13 +205,23 @@ class SharingComponent extends BaseComponent
     }
     
     /**
+     * Answers a list of all buttons within the receiver.
+     *
+     * @return DataList
+     */
+    public function getButtons()
+    {
+        return $this->AllChildren();
+    }
+    
+    /**
      * Answers a list of the enabled buttons within the receiver.
      *
      * @return ArrayList
      */
     public function getEnabledButtons()
     {
-        return $this->Buttons()->filterByCallback(function ($button) {
+        return $this->getButtons()->filterByCallback(function ($button) {
             return $button->isEnabled();
         });
     }
@@ -256,23 +233,27 @@ class SharingComponent extends BaseComponent
      */
     public function isDisabled()
     {
-        if ($this->getEnabledButtons()->exists()) {
-            
-            if ($page = $this->getCurrentPage(Page::class)) {
-                
-                if (!in_array(get_class($page), $this->config()->disabled_on)) {
-                    
-                    if (!$page->isSharingDisabled()) {
-                        return parent::isDisabled();
-                    }
-                    
-                }
-                
-            }
-            
+        // Disable (if no enabled buttons):
+        
+        if (!$this->getEnabledButtons()->exists()) {
+            return true;
         }
         
-        return true;
+        // Disable (if no current page):
+        
+        if (!($page = $this->getCurrentPage(Page::class))) {
+            return true;
+        }
+        
+        // Disable (if disabled for page class):
+        
+        if (in_array(get_class($page), $this->config()->disabled_on)) {
+            return true;
+        }
+        
+        // Enable (if sharing is not disabled for page):
+        
+        return !$page->isSharingDisabled() ? parent::isDisabled() : true;
     }
     
     /**

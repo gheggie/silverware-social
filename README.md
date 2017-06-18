@@ -1,5 +1,9 @@
 # SilverWare Social Module
 
+[![Latest Stable Version](https://poser.pugx.org/silverware/social/v/stable)](https://packagist.org/packages/silverware/social)
+[![Latest Unstable Version](https://poser.pugx.org/silverware/social/v/unstable)](https://packagist.org/packages/silverware/social)
+[![License](https://poser.pugx.org/silverware/social/license)](https://packagist.org/packages/silverware/social)
+
 Provides a sharing component for use with [SilverWare][silverware], allowing pages to be shared via
 a series of sharing buttons for social media services.
 
@@ -41,13 +45,13 @@ Included with the repository is `SharingButton`, which forms a base class from w
 implementations, and `EmailSharingButton` which renders a button for sharing the current page via
 email.
 
-Buttons can be added and removed using the Buttons tab in the `SharingComponent` CMS interface.
+Buttons can be added and removed using the site tree as children of `SharingComponent`.
 
 ### Disabling Sharing
 
 After installation, this module adds a "Sharing" section to the Settings tab for pages, with a
 "Sharing disabled" checkbox. Simply check this box for a particular page, and the sharing component
-will not be shown.
+will not be shown. By default, sharing is disabled for `ErrorPage` instances.
 
 ## Issues
 

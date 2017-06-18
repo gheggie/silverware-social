@@ -19,12 +19,7 @@ namespace SilverWare\Social\Model;
 
 use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\TextField;
-use SilverWare\Extensions\RenderableExtension;
-use SilverWare\ORM\MultiClassObject;
-use SilverWare\Social\Components\SharingComponent;
-use SilverWare\View\GridAware;
-use SilverWare\View\Renderable;
-use SilverWare\View\ViewClasses;
+use SilverWare\Model\Component;
 use Page;
 
 /**
@@ -36,12 +31,8 @@ use Page;
  * @license https://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  * @link https://github.com/praxisnetau/silverware-social
  */
-class SharingButton extends MultiClassObject
+class SharingButton extends Component
 {
-    use GridAware;
-    use Renderable;
-    use ViewClasses;
-    
     /**
      * Human-readable singular name.
      *
@@ -59,87 +50,36 @@ class SharingButton extends MultiClassObject
     private static $plural_name = 'Sharing Buttons';
     
     /**
-     * Defines the default sort field and order for this object.
+     * Description of this object.
      *
      * @var string
      * @config
      */
-    private static $default_sort = 'Sort';
+    private static $description = 'A component which represents a sharing button';
     
     /**
-     * Maps field names to field types for this object.
+     * Icon file for this object.
      *
-     * @var array
+     * @var string
      * @config
      */
-    private static $db = [
-        'Sort' => 'Int',
-        'Name' => 'Varchar(128)'
-    ];
+    private static $icon = 'silverware-social/admin/client/dist/images/icons/SharingButton.png';
     
     /**
-     * Defines the has-one associations for this object.
+     * Defines an ancestor class to hide from the admin interface.
      *
-     * @var array
+     * @var string
      * @config
      */
-    private static $has_one = [
-        'Parent' => SharingComponent::class
-    ];
+    private static $hide_ancestor = Component::class;
     
     /**
-     * Defines the summary fields of this object.
+     * Defines the allowed children for this object.
      *
-     * @var array
+     * @var array|string
      * @config
      */
-    private static $summary_fields = [
-        'Type',
-        'Name',
-        'Disabled.Nice'
-    ];
-    
-    /**
-     * Defines the extension classes to apply to this object.
-     *
-     * @var array
-     * @config
-     */
-    private static $extensions = [
-        RenderableExtension::class
-    ];
-    
-    /**
-     * Answers a list of field objects for the CMS interface.
-     *
-     * @return FieldList
-     */
-    public function getCMSFields()
-    {
-        // Obtain Field Objects (from parent):
-        
-        $fields = parent::getCMSFields();
-        
-        // Create Main Fields:
-        
-        if ($this->isInDB()) {
-            
-            $fields->addFieldsToTab(
-                'Root.Main',
-                [
-                    TextField::create(
-                        'Name',
-                        $this->fieldLabel('Name')
-                    )
-                ]
-            );
-            
-        }
-        
-        // Answer Field Objects:
-        
-        return $fields;
-    }
+    private static $allowed_children = 'none';
     
     /**
      * Answers a validator for the CMS interface.
@@ -149,40 +89,8 @@ class SharingButton extends MultiClassObject
     public function getCMSValidator()
     {
         return RequiredFields::create([
-            'Name'
+            'Title'
         ]);
-    }
-    
-    /**
-     * Answers the labels for the fields of the receiver.
-     *
-     * @param boolean $includerelations Include labels for relations.
-     *
-     * @return array
-     */
-    public function fieldLabels($includerelations = true)
-    {
-        // Obtain Field Labels (from parent):
-        
-        $labels = parent::fieldLabels($includerelations);
-        
-        // Define Field Labels:
-        
-        $labels['Name'] = _t(__CLASS__ . '.NAME', 'Name');
-        
-        // Answer Field Labels:
-        
-        return $labels;
-    }
-    
-    /**
-     * Answers the title of the receiver for the CMS interface.
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->Name ? $this->Name : parent::getTitle();
     }
     
     /**
@@ -190,19 +98,9 @@ class SharingButton extends MultiClassObject
      *
      * @return string
      */
-    public function getLink()
+    public function getButtonLink()
     {
         return $this->getCurrentPageLink();
-    }
-    
-    /**
-     * Answers the current page from the parent component.
-     *
-     * @return Page
-     */
-    public function getCurrentPage()
-    {
-        return $this->Parent()->getCurrentPage(Page::class);
     }
     
     /**
@@ -212,7 +110,7 @@ class SharingButton extends MultiClassObject
      */
     public function getCurrentPageLink()
     {
-        if ($page = $this->getCurrentPage()) {
+        if ($page = $this->getCurrentPage(Page::class)) {
             return $page->AbsoluteLink();
         }
     }
@@ -224,23 +122,9 @@ class SharingButton extends MultiClassObject
      */
     public function getCurrentPageTitle()
     {
-        if ($page = $this->getCurrentPage()) {
+        if ($page = $this->getCurrentPage(Page::class)) {
             return $page->Title;
         }
-    }
-    
-    /**
-     * Answers the default style ID for the HTML template.
-     *
-     * @return string
-     */
-    public function getDefaultStyleID()
-    {
-        return sprintf(
-            '%s_%s',
-            $this->Parent()->getHTMLID(),
-            $this->getClassNameWithID()
-        );
     }
     
     /**

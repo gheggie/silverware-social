@@ -18,10 +18,10 @@
 namespace SilverWare\Social\Extensions;
 
 use SilverStripe\Forms\CheckboxField;
-use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Security\Permission;
+use SilverWare\Forms\FieldSection;
 
 /**
  * A data extension which adds social settings to pages.
@@ -67,12 +67,16 @@ class PageExtension extends DataExtension
         
         $fields->addFieldToTab(
             'Root.Settings',
-            $settings = CompositeField::create([
-                CheckboxField::create(
-                    'SharingDisabled',
-                    $this->owner->fieldLabel('SharingDisabled')
-                )
-            ])->setName('SocialSettings')->setTitle($this->owner->fieldLabel('SocialSettings'))
+            $settings = FieldSection::create(
+                'SocialSettings',
+                $this->owner->fieldLabel('SocialSettings'),
+                [
+                    CheckboxField::create(
+                        'SharingDisabled',
+                        $this->owner->fieldLabel('SharingDisabled')
+                    )
+                ]
+            )
         );
         
         // Check Permissions and Modify Fields:
