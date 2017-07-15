@@ -137,8 +137,8 @@ class SharingComponent extends BaseComponent
         $fields->addFieldToTab(
             'Root.Style',
             FieldSection::create(
-                'SharingComponentStyle',
-                $this->i18n_singular_name(),
+                'SharingStyle',
+                $this->fieldLabel('SharingStyle'),
                 [
                     DropdownField::create(
                         'ButtonLayout',
@@ -170,6 +170,7 @@ class SharingComponent extends BaseComponent
         // Define Field Labels:
         
         $labels['ButtonLayout'] = _t(__CLASS__ . '.BUTTONLAYOUT', 'Button layout');
+        $labels['SharingStyle'] = _t(__CLASS__ . '.SHARING', 'Sharing');
         
         // Answer Field Labels:
         
