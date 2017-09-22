@@ -212,7 +212,7 @@ class SharingComponent extends BaseComponent
      */
     public function getButtons()
     {
-        return $this->AllChildren();
+        return $this->getAllChildren();
     }
     
     /**
