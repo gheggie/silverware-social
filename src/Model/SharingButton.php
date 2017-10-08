@@ -63,7 +63,7 @@ class SharingButton extends Component
      * @var string
      * @config
      */
-    private static $icon = 'silverware-social/admin/client/dist/images/icons/SharingButton.png';
+    private static $icon = 'silverware/social: admin/client/dist/images/icons/SharingButton.png';
     
     /**
      * Defines an ancestor class to hide from the admin interface.

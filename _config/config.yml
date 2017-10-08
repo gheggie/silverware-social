@@ -12,6 +12,6 @@ Page:
 
 SilverStripe\CMS\Controllers\ContentController:
   required_js:
-    - silverware-social/client/dist/js/bundle.js
+    - "silverware/social: client/dist/js/bundle.js"
   required_css:
-    - silverware-social/client/dist/styles/bundle.css
+    - "silverware/social: client/dist/styles/bundle.css"
