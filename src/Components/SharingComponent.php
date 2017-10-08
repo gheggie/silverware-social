@@ -71,7 +71,7 @@ class SharingComponent extends BaseComponent
      * @var string
      * @config
      */
-    private static $icon = 'silverware-social/admin/client/dist/images/icons/SharingComponent.png';
+    private static $icon = 'silverware/social: admin/client/dist/images/icons/SharingComponent.png';
     
     /**
      * Defines an ancestor class to hide from the admin interface.

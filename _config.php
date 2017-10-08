@@ -14,13 +14,3 @@
  * @license https://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  * @link https://github.com/praxisnetau/silverware-social
  */
-
-// Define Module Constants:
-
-if (!defined('SILVERWARE_SOCIAL_DIR')) {
-    define('SILVERWARE_SOCIAL_DIR', basename(__DIR__));
-}
-
-if (!defined('SILVERWARE_SOCIAL_PATH')) {
-    define('SILVERWARE_SOCIAL_PATH', realpath(__DIR__));
-}

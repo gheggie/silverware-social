@@ -1,6 +1,6 @@
 {
   "name": "silverware/social",
-  "type": "silverstripe-module",
+  "type": "silverstripe-vendormodule",
   "description": "SilverWare Social Module.",
   "homepage": "https://github.com/praxisnetau/silverware-social",
   "keywords": [
@@ -30,7 +30,10 @@
     "branch-alias": {
       "dev-master": "1.0.x-dev"
     },
-    "installer-name": "silverware-social"
+    "expose": [
+      "admin/client/dist",
+      "client/dist"
+    ]
   },
   "minimum-stability": "dev",
   "prefer-stable": true
