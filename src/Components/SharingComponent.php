@@ -74,6 +74,14 @@ class SharingComponent extends BaseComponent
     private static $icon = 'silverware/social: admin/client/dist/images/icons/SharingComponent.png';
     
     /**
+     * Defines the table name to use for this object.
+     *
+     * @var string
+     * @config
+     */
+    private static $table_name = 'SilverWare_SharingComponent';
+    
+    /**
      * Defines an ancestor class to hide from the admin interface.
      *
      * @var string
