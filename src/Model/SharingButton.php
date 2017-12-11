@@ -66,6 +66,14 @@ class SharingButton extends Component
     private static $icon = 'silverware/social: admin/client/dist/images/icons/SharingButton.png';
     
     /**
+     * Defines the table name to use for this object.
+     *
+     * @var string
+     * @config
+     */
+    private static $table_name = 'SilverWare_SharingButton';
+    
+    /**
      * Defines an ancestor class to hide from the admin interface.
      *
      * @var string
