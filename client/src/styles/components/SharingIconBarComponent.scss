@@ -1,0 +1,51 @@
+/* Sharing Icon Bar Component Styles
+===================================================================================================================== */
+
+.sharingiconbarcomponent {
+  
+  ul.icons {
+    
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    list-style-type: none;
+    
+    > li.icon {
+      
+      > .sharingicon {
+        
+        cursor: pointer;
+        display: inline-block;
+        
+        .sharingicon-popover-content {
+          display: none;
+        }
+        
+      }
+      
+    }
+    
+    &.vertical {
+      
+      > li.icon {
+        display: block;
+      }
+      
+    }
+    
+    &.horizontal {
+      
+      > li.icon {
+        display: inline-block;
+      }
+      
+    }
+    
+  }
+  
+}
+
+.sharingicon-popover-content {
+  min-width: 120px;
+  text-align: center;
+}
