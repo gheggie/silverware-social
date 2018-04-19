@@ -157,6 +157,22 @@ class EmailSharingButton extends SharingButton
     }
     
     /**
+     * Populates the default values for the fields of the receiver.
+     *
+     * @return void
+     */
+    public function populateDefaults()
+    {
+        // Populate Defaults (from parent):
+        
+        parent::populateDefaults();
+        
+        // Populate Defaults:
+        
+        $this->Title = _t(__CLASS__ . '.DEFAULTTITLE', 'Share via Email');
+    }
+    
+    /**
      * Answers the subject for the email.
      *
      * @return string

@@ -23,7 +23,7 @@ use SilverWare\Model\Component;
 use Page;
 
 /**
- * An extension of the multi-class object class for a sharing button.
+ * An extension of the component class for a sharing button.
  *
  * @package SilverWare\Social\Model
  * @author Colin Tucker <colin@praxis.net.au>

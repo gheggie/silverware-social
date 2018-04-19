@@ -1,8 +1,7 @@
-/* PostCSS Configuration
+/* Sharing Button Styles
 ===================================================================================================================== */
 
-module.exports = {
-  plugins: [
-    require('autoprefixer')
-  ]
-};
+.sharingbutton {
+  font-size: 0;
+  overflow: hidden;
+}
