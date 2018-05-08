@@ -1,0 +1,32 @@
+/* Sharing Item Styles
+===================================================================================================================== */
+
+.sharingitem {
+  
+  ul.icons {
+    
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    list-style-type: none;
+    
+    > li.icon {
+      
+      display: inline-block;
+      
+      > .sharingicon {
+        
+        cursor: pointer;
+        display: inline-block;
+        
+        .sharingicon-popover-content {
+          display: none;
+        }
+        
+      }
+      
+    }
+    
+  }
+  
+}
