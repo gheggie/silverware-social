@@ -1,0 +1,7 @@
+SharingButton:
+  extensions:
+    - SilverWareRequirementsExtension
+
+Page:
+  extensions:
+    - SharingPageExtension
